@@ -1,0 +1,1 @@
+web: gunicorn wishList.wsgi --log-file -
