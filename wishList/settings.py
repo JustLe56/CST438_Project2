@@ -12,16 +12,19 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables - Added 03/01/2021
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0q+ttbt3#^_xcue$r7*w*i8515kb3u_-nwm)0mfrvuqv=k(c_j'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -71,13 +74,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'wishList.wsgi.application'
 
 
-# Database
+# Database - Updated 03/01/2021
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'x7s1w7n49k5wss3i',
+        'USER': 'c8hoss3y0n26x10j',
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': 'klbcedmmqp7w17ik.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        'PORT': '3306'
     }
 }
 
