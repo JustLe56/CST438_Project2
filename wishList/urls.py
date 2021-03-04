@@ -16,9 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from django.urls import path
+
 from .views import home
+from .views import create_account
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home, name="home"),
+    path('create/', create_account,name="create_account")
 ]
