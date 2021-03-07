@@ -1,15 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import wishListUserCreationForm, wishListUserChangeForm
-from .models import wishListUser
+from .forms import WishListUserCreationForm, WishListUserChangeForm
+from .models import WishListUser
 
-# Register your models here.
 
-class wishListUserAdmin(UserAdmin):
-    add_form = wishListUserCreationForm
-    form = wishListUserChangeForm
-    model = wishListUser
-    list_display = ['email', 'username',]
+class WishListUserAdmin(UserAdmin):
+    add_form = WishListUserCreationForm
+    form = WishListUserChangeForm
+    model = WishListUser
+    list_display = ['email', 'username', ]
 
-admin.site.register(wishListUser, wishListUserAdmin)
+
+admin.site.register(WishListUser, WishListUserAdmin)

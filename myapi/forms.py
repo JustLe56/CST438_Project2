@@ -1,15 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from.models import wishListUser
+from.models import WishListUser
 
-class wishListUserCreationForm(UserCreationForm):
+
+class WishListUserCreationForm(UserCreationForm):
 
     class Meta:
-        model = wishListUser
+        model = WishListUser
         fields = ('username', 'email')
 
-class wishListUserChangeForm(UserChangeForm):
+
+class WishListUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = wishListUser
+        model = WishListUser
         fields = ('username', 'email')
