@@ -17,11 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 
-from .views import home
-from .views import createAcc
+from .views import home, logout, createAcc
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', home, name="home"),
-    path('createAccount/', createAcc, name="createAcc")
+    path('admin/', admin.site.urls),
+    path('', home, name="home"),
+    path('createAccount/', createAcc, name="createAcc"),
+    path('logout/', logout, name="logout")
 ]
