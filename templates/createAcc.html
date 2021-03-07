@@ -22,14 +22,15 @@
         <form action="/" method="post" id="credentials" onsubmit="return matchPass()" >
             {% csrf_token %}
          <label for="username">Username</label><br><label>
-            <input type="text" name="username" form="credentials" required="required" minlength="6">
+            <input type="text" name="username" form="credentials" required="required">
         </label><br><br>
         <label for="password">Password</label><br><label>
-            <input type="password" name="password" form="credentials" required="required" minlength="8">
+            <input type="password" name="password" form="credentials" minlength="8">
         </label><br><br>
-        <label for="confirmPass">Confirm password</label><br><input type="password" id="confirmPass" required="required" onchange="matchPass()"> <div id="valMsg"></div> <br><br>
+        <label for="confirmPass">Confirm password</label><br><input type="password" id="confirmPass" required="required" onchange="matchPass()"> <br><br>
         <button type="submit" class="btn btn-outline-primary" name="signUpBtn" form="credentials" >sign up</button>
         </form>
+        <div id="valMsg"></div>
     </div>
 </div>
 
