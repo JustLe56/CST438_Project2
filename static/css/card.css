@@ -1,16 +1,16 @@
-#signUp{
+.card{
     margin: 10% auto auto;
     width: 40%;
-    border-radius: 20px;
+    border-style: hidden;
 }
-#signUpBan{
+.cardBan{
     margin-top: 1%;
     font-size:x-large;
     font-weight: bolder;
     color:dimgray;
     text-align: center;
 }
-#signUpInfo{
+.cardInfo{
     text-align: center;
     width: 50%;
     padding: 10px;

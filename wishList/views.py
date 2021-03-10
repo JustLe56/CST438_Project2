@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 def logout(request):
     if request.GET.get('logout', None):
         del request.session['loggedin']
-        request.session['loggedin'] = 0
-    return redirect('createAcc')
+        del request.session['loggedUsr']
+    return redirect('/createAccount')
 
 
 def home(request):
@@ -26,14 +26,14 @@ def home(request):
         return render(request, '../templates/home.html', context)
     else:
         request.session['loggedin'] = 0
-        return redirect('createAccount/')
+        return redirect('/createAccount')
 
 
 
 
 def createAcc(request):
     context = {}
-    if request.session['loggedin'] == 0:
+    if 'loggedUsr' not in request.session:
         return render(request, '../templates/createAcc.html', context)
     else:
         return redirect('')

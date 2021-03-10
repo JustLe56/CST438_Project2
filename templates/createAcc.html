@@ -8,17 +8,17 @@
     <title>Create Account</title>
     {% include 'partials/_bootstrap.html' %}
     <!-- CSS -->
-    <link href="{% static 'css/createAcc.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="{% static 'js/createAcc.js' %}"></script>
 </head>
 <body>
 {% include 'partials/_navBar.html' %}
 
-<div id="signUp">
+<div class="card">
 
-    <div id="signUpBan">Sign Up</div>
+    <div class="cardBan">Sign Up</div>
     <hr>
-    <div id="signUpInfo">
+    <div class="cardInfo">
         <form action="/" method="post" id="credentials" onsubmit="return matchPass()" >
             {% csrf_token %}
          <label for="username">Username</label><br><label>
