@@ -17,12 +17,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 
-from .views import home, logout, createAcc, login
+from .views import home, logout, createAcc, login, additem
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('createAccount/', createAcc, name="createAcc"),
     path('logout/', logout, name="logout"),
-    path('login/', login, name="login")
+    path('login/', login, name="login"),
+    path('additem/', additem, name="additem")
 ]
