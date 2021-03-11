@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    {% include 'partials/_bootstrap.html' %}
+    <!-- CSS -->
+    <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{% static 'js/createAcc.js' %}"></script>
+    {% include 'partials/_navBar.html' %}
+ 
+</head>
+<body>
+    <div id="signUp">
+        <h2 class = "text-center">Add an Item to List</h2>
+        <br>
+        <div id = "buttonContainer" class = "card p-5">
+        <label for="itemNameInput" class="form-label">Item Name</label>
+        <input id = "itemNameInput" type = "text">
+        <br>
+        <label for="itemUrlInput" class="form-label">Item URL</label>
+        <input id = "itemUrlInput" type = "text">
+        <br>
+        <label for="itemImageUrlInput" class="form-label">Item Image URL</label>
+        <input id = "itemImageUrlInput" type = "text">
+        <br>
+        <label for="itemDescInput" class="form-label">Item Description</label>
+        <input id = "itemDescInput" type = "text">
+        <br>
+        <label for="itemPriorityInput" class="form-label">Item Priority</label>
+        <input id = "itemPriorityInput" type = "text">
+        <button id = "createButton" class = "btn btn-primary m-5"> Add item </button>
+    </div>
+
+</body>
+</html>

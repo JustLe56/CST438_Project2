@@ -43,3 +43,7 @@ def login(request):
         return render(request, '../templates/login.html', context)
     else:
         return redirect('')
+
+def additem(request):
+    context = {}
+    return render (request,'../templates/additem.html',context)
