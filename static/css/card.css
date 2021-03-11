@@ -1,0 +1,19 @@
+.card{
+    margin: 10% auto auto;
+    width: 40%;
+    border-style: hidden;
+}
+.cardBan{
+    margin-top: 1%;
+    font-size:x-large;
+    font-weight: bolder;
+    color:dimgray;
+    text-align: center;
+}
+.cardInfo{
+    text-align: center;
+    width: 50%;
+    padding: 10px;
+    margin: 1% auto auto;
+    font-size: large;
+}
