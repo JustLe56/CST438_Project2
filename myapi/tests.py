@@ -1,8 +1,8 @@
-from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase, APIRequestFactory
 from .models import WishListUser
 from .serializers import WishListUserSerializer
+from json import loads as json_loads
 
 
 class WishListUserTests(APITestCase):
@@ -28,3 +28,15 @@ class WishListUserTests(APITestCase):
         for method in disallowed_methods:
             response = method('/api/createAccount/')
             self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_login(self):
+        WishListUserSerializer().create(self.test_credentials.copy())
+        response = self.client.post('/api/login/', self.test_credentials, format='json', follow=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json_loads(response.content), {'detail': 'Success'})
+
+    def test_login_fail(self):
+        test_incorrect_credentials = {'username': 'wrong', 'password': 'incorrect'}
+        response = self.client.post('/api/login/', test_incorrect_credentials, format='json', follow=True)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json_loads(response.content), {'detail': 'Invalid credentials'})
