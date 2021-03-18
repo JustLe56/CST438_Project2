@@ -3,8 +3,9 @@ from .models import WishListUser
 from .serializers import WishListUserSerializer
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 import json
 
@@ -31,3 +32,8 @@ def api_login_view(request):
         login(request, user)
         return JsonResponse({'detail': 'Success'})
     return JsonResponse({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
+@login_required
+def api_logout_view(request):
+    logout(request)
+    return JsonResponse({'detail': 'Success'})
