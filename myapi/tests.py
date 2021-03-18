@@ -53,8 +53,8 @@ class WishListUserTests(APITestCase):
     def test_logout_fail(self):
         WishListUserSerializer().create(self.test_credentials.copy())
         response = self.client.post('/api/logout/', format='json', follow=True)
-        self.assertEqual(response.status_code, status.HTTP_404_BAD_REQUEST)
-        self.assertEqual(json_loads(response.content), {'detail': 'Invalid credentials'})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json_loads(response.content), {'detail': 'Not logged in'})
 
 class WishlistTests(APITestCase):
 
