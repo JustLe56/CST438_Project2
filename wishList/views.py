@@ -47,3 +47,7 @@ def login(request):
 def additem(request):
     context = {}
     return render (request,'../templates/additem.html',context)
+
+def editAccount(request):
+    context = {}
+    return render (request,'../templates/editAccount.html',context)
