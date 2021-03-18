@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 
-from .views import home, logout, createAcc, login, additem
+from .views import home, logout, createAcc, login, additem, editAccount
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,6 @@ urlpatterns = [
     path('createAccount/', createAcc, name="createAcc"),
     path('logout/', logout, name="logout"),
     path('login/', login, name="login"),
-    path('additem/', additem, name="additem")
+    path('additem/', additem, name="additem"),
+    path('editAccount/', editAccount, name="editAccount")
 ]
