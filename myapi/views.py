@@ -3,8 +3,8 @@ from .models import WishListUser
 from .serializers import WishListUserSerializer
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 import json
 
@@ -13,6 +13,8 @@ class CreateWishListUser(generics.CreateAPIView):
     queryset = WishListUser.objects.all()
     serializer_class = WishListUserSerializer
     http_method_names = (u'post', u'options')
+
+
 
 
 @csrf_exempt
@@ -31,3 +33,10 @@ def api_login_view(request):
         login(request, user)
         return JsonResponse({'detail': 'Success'})
     return JsonResponse({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
+@csrf_exempt
+def api_logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return JsonResponse({'detail': 'Success'})
+    return JsonResponse({'detail': 'Not logged in'}, status=status.HTTP_400_BAD_REQUEST)
