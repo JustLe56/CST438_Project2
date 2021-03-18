@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from .views import home, logout, createAcc, login, additem, editAccount
 
@@ -26,5 +26,6 @@ urlpatterns = [
     path('logout/', logout, name="logout"),
     path('login/', login, name="login"),
     path('additem/', additem, name="additem"),
-    path('editAccount/', editAccount, name="editAccount")
+    path('editAccount/', editAccount, name="editAccount"),
+    path('api/', include('myapi.urls')),
 ]

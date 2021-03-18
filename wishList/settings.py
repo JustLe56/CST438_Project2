@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cst438-sp2021-groupf.herokuapp.com', 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['cst438-sp2021-groupf.herokuapp.com', 'localhost', '0.0.0.0', '127.0.0.1']
 
 # Added 2/27/2021
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'myapi.apps.MyapiConfig',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +133,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Added 2/27/2021
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
+AUTH_USER_MODEL = 'myapi.WishListUser'
+
+# Added 3/9/2021
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer'
+    ],
+}
+
+LOGIN_REDIRECT_URL = '/'
