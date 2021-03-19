@@ -15,8 +15,6 @@ class CreateWishListUser(generics.CreateAPIView):
     http_method_names = (u'post', u'options')
 
 
-
-
 @csrf_exempt
 @require_POST
 def api_login_view(request):
@@ -33,6 +31,7 @@ def api_login_view(request):
         login(request, user)
         return JsonResponse({'detail': 'Success'})
     return JsonResponse({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 @csrf_exempt
 def api_logout_view(request):

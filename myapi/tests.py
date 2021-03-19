@@ -5,6 +5,7 @@ from .serializers import WishListUserSerializer
 from json import loads as json_loads
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
+from django.db.models import Model
 
 
 class WishListUserTests(APITestCase):
@@ -55,6 +56,14 @@ class WishListUserTests(APITestCase):
         response = self.client.post('/api/logout/', format='json', follow=True)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json_loads(response.content), {'detail': 'Not logged in'})
+
+    def test_create_personal_wishlist(self):
+        user = WishListUserSerializer().create(self.test_credentials.copy())
+        try:
+            Wishlist.objects.get(wishlistUser=user)
+        except Model.DoesNotExist as e:
+            self.fail(e.message)
+
 
 class WishlistTests(APITestCase):
 
