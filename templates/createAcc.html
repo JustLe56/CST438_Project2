@@ -11,24 +11,27 @@
     <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="{% static 'js/createAcc.js' %}"></script>
 </head>
-<body>
+<body onload="createAccount()">
 {% include 'partials/_navBar.html' %}
 
 <div class="card">
-
+    <form action='/login/' method="post" id="success">
+        {% csrf_token %}
+        <input type="hidden" name="accCreated" value='1'>
+    </form>
     <div class="cardBan">Create Account</div>
     <hr>
     <div class="cardInfo">
-        <form action="/" method="post" id="credentials" onsubmit="return matchPass()" >
+        <form action="/api/createAccount/" method="post" id="credentials" onsubmit="return matchPass()" >
             {% csrf_token %}
          <label for="username">Username</label><br><label>
             <input type="text" name="username" form="credentials" required="required">
         </label><br><br>
         <label for="password">Password</label><br><label>
-            <input type="password" name="password" form="credentials" required="required" minlength="8">
+            <input type="password" name="password" form="credentials" required="required" minlength="8" onchange="resetVal()">
         </label><br><br>
         <label for="confirmPass">Confirm password</label><br><input type="password" id="confirmPass" required="required" onchange="matchPass()"> <br><br>
-        <button type="submit" class="btn btn-outline-primary" name="signUpBtn" form="credentials" >sign up</button>
+        <button type="submit" class="btn btn-success">sign up</button>
         </form>
         <div id="valMsg"></div>
     </div>

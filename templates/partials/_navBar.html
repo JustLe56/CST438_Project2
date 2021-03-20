@@ -30,9 +30,9 @@
                     <a class="dropdown-item" href="/editAccount">Edit account</a>
                     <a class="dropdown-item" href="/additem">Add item</a>
                     <div class="dropdown-divider"></div>
-                    <form action="/logout/" method="post" style="text-align: center" >
+                    <form action="/logout/" method="post" style="text-align: center" class="dropdown-item">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-danger">logout</button>
+                        <button type="submit" class="btn btn-link" style="color: #C75450" ><b>logout</b></button>
                     </form>
                 </div>
 

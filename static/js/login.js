@@ -13,7 +13,7 @@ function login(){
             posting = $.post(url, JSON.stringify(creds));
 
         posting.fail(function (xhr, status, error){
-            $("#valMsg").html("<br><div style='font-size: small' class=\"alert alert-secondary\" role=\"alert\">" +
+            $("#valMsg").html("<br><div style='font-size: small' class='alert alert-secondary' role='alert'>" +
                    "Wrong username/password" +
                    "</div>");
             console.log(error)

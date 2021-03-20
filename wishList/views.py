@@ -23,15 +23,17 @@ def createAcc(request):
 
 def login(request):
     context = {}
-    if 'loggedUsr' not in request.session:
-        return render(request, '../templates/login.html', context)
-    else:
-        return redirect('')
+    if request.method == 'POST':
+        context = {'welcome': True}
+
+    return render(request, '../templates/login.html', context)
+
 
 def additem(request):
     context = {}
-    return render (request,'../templates/additem.html',context)
+    return render(request, '../templates/additem.html', context)
+
 
 def editAccount(request):
     context = {}
-    return render (request,'../templates/editAccount.html',context)
+    return render(request, '../templates/editAccount.html', context)

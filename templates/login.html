@@ -15,7 +15,6 @@
 </head>
 <body onload="login()">
 {% include 'partials/_navBar.html' %}
-
 <div class="card">
 
     <div class="cardBan">Login</div>
@@ -35,7 +34,14 @@
             <button type="submit" class="btn btn-outline-primary" form="credentials" >login</button>
 
         </form>
-        <div id="valMsg"></div>
+        <div id="valMsg">
+            {% if welcome %}
+                <br>
+                <div class="alert alert-success" role="alert" style="font-size: small">
+                    Account created successfully!
+                </div>
+            {% endif %}
+        </div>
     </div>
 </div>
 
