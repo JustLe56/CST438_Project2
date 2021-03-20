@@ -9,9 +9,11 @@
     {% include 'partials/_bootstrap.html' %}
     <!-- CSS -->
     <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="{% static 'js/createAcc.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.2.1/jquery.serializejson.min.js" integrity="sha512-SdWDXwOhhVS/wWMRlwz3wZu3O5e4lm2/vKK3oD0E5slvGFg/swCYyZmts7+6si8WeJYIUsTrT3KZWWCknSopjg==" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
+
 </head>
-<body>
+<body onload="login()">
 {% include 'partials/_navBar.html' %}
 
 <div class="card">
@@ -19,25 +21,21 @@
     <div class="cardBan">Login</div>
     <hr>
     <div class="cardInfo">
-        <form action="/" method="post" id="credentials" >
+        <form action="/api/login/" id="credentials">
             {% csrf_token %}
 
             <label for="username">Username</label><br><label>
-                <input type="text" name="username" form="credentials" required="required">
+                <input type="text" name="username" form="credentials" required="required" onchange="resetVal()">
             </label><br><br>
 
             <label for="password">Password</label><br><label>
-                <input type="password" name="password" form="credentials" required="required" >
+                <input type="password" name="password" form="credentials" required="required" onchange="resetVal()">
             </label><br><br>
 
-            <button type="submit" class="btn btn-outline-primary" name="signUpBtn" form="credentials" >login</button>
+            <button type="submit" class="btn btn-outline-primary" form="credentials" >login</button>
 
         </form>
-        <div id="valMsg">
-            {% if request.session.loggedin == 0 %}
-                <br><div class='alert alert-warning' role='alert'>wrong username/password</div>
-            {% endif %}
-        </div>
+        <div id="valMsg"></div>
     </div>
 </div>
 

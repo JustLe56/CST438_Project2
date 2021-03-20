@@ -19,18 +19,21 @@
 
         {% endif %}
 
-        {% if request.session.loggedUsr %}
+        {% if not request.user.is_anonymous%}
             <li  class="nav-item dropdown" >
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-expanded="false">
-                    {{ request.session.loggedUsr }}
+                    {{ user }}
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
                     <a class="dropdown-item" href="/editAccount">Edit account</a>
                     <a class="dropdown-item" href="/additem">Add item</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/logout/?logout=True">Logout</a>
+                    <form action="/logout/" method="post" style="text-align: center" >
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">logout</button>
+                    </form>
                 </div>
 
             </li>

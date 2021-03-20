@@ -1,35 +1,19 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 
 
-def logout(request):
-    if request.GET.get('logout', None):
-        del request.session['loggedin']
-        del request.session['loggedUsr']
-    return redirect('/login')
+def logout_usr(request):
+    logout(request)
+    return HttpResponseRedirect('/login')
 
 
 def home(request):
-    if 'loggedin' not in request.session:
-        request.session['loggedin'] = None
-    testUsr = ['danielRangel', 'christianSumares', 'justinLe', 'nayanGupta']
-    testPass = "password"
     context = {}
-    if request.session['loggedin'] == 1:
+    user = request.user
+    if user.is_authenticated:
         return render(request, '../templates/home.html', context)
-
-    usrField = request.POST.get('username', None)
-    passField = request.POST.get('password', None)
-
-    if (usrField is None) or (passField is None):
-        return redirect('/login')
-
-    if (usrField in testUsr) and (testPass == passField):
-        request.session['loggedin'] = 1
-        request.session['loggedUsr'] = usrField
-        return render(request, '../templates/home.html', context)
-    else:
-        request.session['loggedin'] = 0
-        return redirect('/login')
+    return redirect('/login')
 
 
 def createAcc(request):

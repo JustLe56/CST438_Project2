@@ -17,13 +17,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import home, logout, createAcc, login, additem, editAccount
+from .views import home, logout_usr, createAcc, login, additem, editAccount
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('createAccount/', createAcc, name="createAcc"),
-    path('logout/', logout, name="logout"),
+    path('logout/', logout_usr, name="logout_usr"),
     path('login/', login, name="login"),
     path('additem/', additem, name="additem"),
     path('editAccount/', editAccount, name="editAccount"),
