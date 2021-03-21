@@ -5,36 +5,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+    <title>Add Item</title>
     {% include 'partials/_bootstrap.html' %}
+    <script type="text/javascript" src="{% static 'js/addItem.js' %}"></script>
     <!-- CSS -->
     <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="{% static 'js/createAcc.js' %}"></script>
+    <link href="{% static 'css/list.css' %}" rel="stylesheet" type="text/css"/>
+
 </head>
-<body>
+<body onload="refresh()" >
     {% include 'partials/_navBar.html' %}
     <div class="card">
 
         <div class="cardBan">Add item</div>
         <hr>
         <div class="cardInfo">
-            <label for="itemNameInput" class="form-label">Item Name</label>
-            <input id = "itemNameInput" type = "text">
-            <br> <br>
-            <label for="itemUrlInput" class="form-label">Item Store URL</label>
-            <input id = "itemUrlInput" type = "text">
-            <br><br>
-            <label for="itemImageUrlInput" class="form-label">Item Image URL</label>
-            <input id = "itemImageUrlInput" type = "text">
-            <br><br>
-            <label for="itemDescInput" class="form-label">Item Description</label>
-            <input id = "itemDescInput" type = "text">
-            <br><br>
-            <label for="itemPriorityInput" class="form-label">Item Priority</label>
-            <input id = "itemPriorityInput" type = "text">
-            <button id = "createButton" class = "btn btn-primary m-5"> Add item </button>
+            <form id="addItem" action="/add_item/">
+                <div class="labels">
+                <input type="hidden" name="rm" value='-1'>
+                <label for="name" class="form-label">Item Name:</label> <br><br>
+                <label for="url" class="form-label">Item Store URL:</label> <br><br>
+                    <label for="img_url" class="form-label">Item Image URL:</label><br><br>
+                <label for="description" class="form-label">Item Description:</label><br><br>
+                <label for="priority" class="form-label">Item Priority:</label>
+                </div>
+
+                <div class="inputs">
+                    <input name="name" id="name" type = "text" required="required" form="addItem"><br><br>
+                    <input name = "url" id="url" type = "text" required="required" form="addItem"><br><br>
+                    <input name = "img_url" id="img_url" type = "text" required="required" form="addItem"><br><br>
+                    <input name = "description" id="description" type = "text" required="required" form="addItem"><br><br>
+                    <select name="priority" id="priority">
+                      <option value=1>1</option>
+                      <option value=2>2</option>
+                      <option value=3>3</option>
+                      <option value=4>4</option>
+                      <option value=5>5</option>
+                    </select>
+                </div>
+
+            </form>
+
         </div>
+        <button style="width: 30%; margin: 10% auto auto" id = "addBtn" class = "btn btn-success" form="addItem" onclick="editList('add')"> Add item </button>
     </div>
 
+    <div id="live"></div>
+
+<br><br>
 </body>
 </html>
