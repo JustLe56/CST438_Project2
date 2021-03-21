@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase, APIRequestFactory
 from .models import WishListUser, Wishlist, Link, WishlistItem
-from .serializers import WishListUserSerializer
+from .serializers import WishListUserSerializer, WishlistItemSerializer
 from json import loads as json_loads
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
@@ -109,6 +109,7 @@ class WishlistItemTests(APITestCase):
         self.wishlist.save()
         self.link = Link(url='https://lazerhawk.bandcamp.com/merch/2x-lazerhawk-logo-t-shirt-sale')
         self.link.save()
+        self.serializer = WishlistItemSerializer()
         self.item_properties = {
             'wishlist': self.wishlist,
             'link': self.link,
@@ -132,3 +133,13 @@ class WishlistItemTests(APITestCase):
         item_duplicate_index = WishlistItem(**self.item_properties)
         item_duplicate_index.name = 'Lazerhawk T-Shirt 2'
         self.assertRaises(IntegrityError, item_duplicate_index.save)
+
+    def test_wishlist_item_serializer(self):
+        self.item_properties['link_url'] = self.item_properties.pop('link').url
+        self.item_properties['wishlist'] = self.wishlist.id
+        serializer = WishlistItemSerializer(data=self.item_properties)
+        if serializer.is_valid():
+            serializer.save()
+            self.assertEqual(WishlistItem.objects.count(), 1)
+        else:
+            self.fail(serializer.errors)
