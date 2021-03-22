@@ -1,7 +1,7 @@
 function editList (type){
     if(type === "add") {
 
-        $('#addItem').submit(async function (event) {
+        $('#addItem').one('submit',async function (event) {
             event.preventDefault();
             let $form = $(this),
                 item = $form.find("input[name = 'rm']").val(),
@@ -39,7 +39,7 @@ function editList (type){
 
     } else {
 
-        $('#rmItem'+type).submit(async function (event) {
+        $('#rmItem'+type).one('submit',async function (event) {
             $('button[name="rmBtn"]').prop("disabled",true);
             event.preventDefault();
             let $form = $(this),
@@ -65,6 +65,6 @@ function editList (type){
 }
 
 function refresh(){
-    $("#live").load("/list/ #refreshed");
-    $('button[name="rmBtn"]').prop("disabled",false);
+    $("#live").load("/list/ #refreshed" );
+
 }

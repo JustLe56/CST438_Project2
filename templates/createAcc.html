@@ -25,12 +25,12 @@
         <form action="/api/createAccount/" method="post" id="credentials" onsubmit="return matchPass()" >
             {% csrf_token %}
          <label for="username">Username</label><br><label>
-            <input type="text" name="username" form="credentials" required="required">
+            <input type="text" name="username" form="credentials" required>
         </label><br><br>
         <label for="password">Password</label><br><label>
-            <input type="password" name="password" form="credentials" required="required" minlength="8" onchange="resetVal()">
+            <input type="password" name="password" form="credentials" required minlength="8" onchange="resetVal()">
         </label><br><br>
-        <label for="confirmPass">Confirm password</label><br><input type="password" id="confirmPass" required="required" onchange="matchPass()"> <br><br>
+        <label for="confirmPass">Confirm password</label><br><input type="password" id="confirmPass" required onchange="matchPass()"> <br><br>
         <button type="submit" class="btn btn-success">sign up</button>
         </form>
         <div id="valMsg"></div>
