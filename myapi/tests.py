@@ -175,3 +175,16 @@ class WishlistItemTests(APITestCase):
         # retrieve first item
         response = self.client.get(f'/api/item/{self.item_properties["index"]}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update(self):
+        item = WishlistItem.objects.create(**self.item_properties)
+        self.serialized_item.update({'image_url': 'https://f4.bcbits.com/img/0003534387_10.jpg', 'priority': 5})
+        response = self.client.put(f'/api/item/{self.item_properties["index"]}', self.serialized_item, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        reserialized = WishlistItemSerializer(instance=WishlistItem.objects.get(id=item.id)).data
+        self.assertEqual(reserialized, self.serialized_item)
+
+    def test_destroy(self):
+        WishlistItem.objects.create(**self.item_properties)
+        response = self.client.delete(f'/api/item/{self.item_properties["index"]}')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

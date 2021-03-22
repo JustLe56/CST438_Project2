@@ -35,6 +35,17 @@ class WishlistItemSerializer(serializers.ModelSerializer):
         link, created = Link.objects.get_or_create(url=validated_data.pop('link')['url'])
         return WishlistItem.objects.create(**validated_data, link=link)
 
+    def update(self, instance, validated_data):
+        link, created = Link.objects.get_or_create(url=validated_data.get('link', {'url': instance.link.url})['url'])
+        instance.link = link
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image_url = validated_data.get('image_url', instance.image_url)
+        instance.priority = validated_data.get('priority', instance.priority)
+        instance.index = validated_data.get('index', instance.index)
+        instance.save()
+        return instance
+
     class Meta:
         model = WishlistItem
-        exclude = ['link']
+        exclude = ['id', 'link']
