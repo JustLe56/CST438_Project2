@@ -24,9 +24,7 @@ class WishlistSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        wishlist = Wishlist(**validated_data)
-        wishlist.save()
-        return wishlist
+        return Wishlist.objects.create(**validated_data)
 
 
 class WishlistItemSerializer(serializers.ModelSerializer):

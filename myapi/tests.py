@@ -104,21 +104,25 @@ class LinkTests(APITestCase):
 class WishlistItemTests(APITestCase):
 
     def setUp(self):
-        self.user = WishListUserSerializer().create({'username': 'Kirk', 'password': 'w4hw4h'})
-        self.wishlist = Wishlist(wishlistUser=self.user)
+        self.user_credentials = {'username': 'Kirk', 'password': 'w4hw4h'}
+        self.user = WishListUserSerializer().create(self.user_credentials.copy())
+        self.wishlist = Wishlist.objects.get(wishlistUser=self.user)
         self.wishlist.save()
         self.link = Link(url='https://lazerhawk.bandcamp.com/merch/2x-lazerhawk-logo-t-shirt-sale')
         self.link.save()
         self.serializer = WishlistItemSerializer()
-        self.item_properties = {
-            'wishlist': self.wishlist,
-            'link': self.link,
+        base_item_properties = {
             'name': 'Lazerhawk T-Shirt',
             'description': 'An awesome T-Shirt.',
             'image_url': 'https://f4.bcbits.com/img/0003534389_10.jpg',
             'priority': 10,
             'index': 0
         }
+        self.item_properties = base_item_properties.copy()
+        self.item_properties.update({'wishlist': self.wishlist, 'link': self.link})
+        self.serialized_item = base_item_properties.copy()
+        self.serialized_item.update({'wishlist': self.wishlist.id, 'link_url': self.link.url})
+        self.client.login(**self.user_credentials)
 
     def test_create_wishlist_item_instance(self):
         item = WishlistItem(**self.item_properties)
@@ -135,11 +139,39 @@ class WishlistItemTests(APITestCase):
         self.assertRaises(IntegrityError, item_duplicate_index.save)
 
     def test_wishlist_item_serializer(self):
-        self.item_properties['link_url'] = self.item_properties.pop('link').url
-        self.item_properties['wishlist'] = self.wishlist.id
-        serializer = WishlistItemSerializer(data=self.item_properties)
+        serializer = WishlistItemSerializer(data=self.serialized_item)
         if serializer.is_valid():
             serializer.save()
             self.assertEqual(WishlistItem.objects.count(), 1)
         else:
             self.fail(serializer.errors)
+
+    def test_create_wishlist_item(self):
+        self.serialized_item.pop('wishlist')
+        print(self.serialized_item)
+        response = self.client.post('/api/item/', self.serialized_item, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(WishlistItem.objects.count(), 1)
+        self.assertEqual(WishlistItem.objects.get().name, self.item_properties['name'])
+
+    def test_create_wishlist_item_index_unique(self):
+        WishlistItem.objects.create(**self.item_properties)
+        self.serialized_item.pop('wishlist')
+        response = self.client.post('/api/item/', self.serialized_item, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_retrieve(self):
+        WishlistItem.objects.create(**self.item_properties)
+        response = self.client.get(f'/api/item/{self.item_properties["index"]}')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_retrieve_duplicate_indexes(self):
+        WishlistItem.objects.create(**self.item_properties)
+        # create second user (and thus a second wishlist)
+        user2 = WishListUserSerializer().create({'username': 'James', 'password': 'Seattle89'})
+        self.item_properties['wishlist'] = Wishlist.objects.get(wishlistUser=user2)
+        # create second item w/same index
+        WishlistItem.objects.create(**self.item_properties)
+        # retrieve first item
+        response = self.client.get(f'/api/item/{self.item_properties["index"]}')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

@@ -1,6 +1,6 @@
-from rest_framework import generics
-from .models import WishListUser
-from .serializers import WishListUserSerializer
+from rest_framework import generics, mixins, permissions
+from .models import WishListUser, WishlistItem, Wishlist
+from .serializers import WishListUserSerializer, WishlistItemSerializer
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -13,6 +13,29 @@ class CreateWishListUser(generics.CreateAPIView):
     queryset = WishListUser.objects.all()
     serializer_class = WishListUserSerializer
     http_method_names = (u'post', u'options')
+
+
+class CreateWishlistItem(generics.CreateAPIView):
+    queryset = WishlistItem.objects.all()
+    serializer_class = WishlistItemSerializer
+    http_method_names = (u'post', u'options')
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        wishlist = Wishlist.objects.get(wishlistUser_id=request.user.id)
+        request.data.update({'wishlist': wishlist.id})
+        return self.create(request, *args, **kwargs)
+
+
+class RetrieveUpdateDestroyWishlistItem(generics.RetrieveUpdateDestroyAPIView):
+    queryset = WishlistItem.objects.all()
+    serializer_class = WishlistItemSerializer
+    http_method_names = (u'get', u'put', u'patch', u'delete', u'options')
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'index'
+
+    def get_queryset(self):
+        return Wishlist.objects.get(wishlistUser=self.request.user).wishlistitem_set
 
 
 @csrf_exempt
