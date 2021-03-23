@@ -138,27 +138,12 @@ class WishlistItemTests(APITestCase):
         item_duplicate_index.name = 'Lazerhawk T-Shirt 2'
         self.assertRaises(IntegrityError, item_duplicate_index.save)
 
-    def test_wishlist_item_serializer(self):
-        serializer = WishlistItemSerializer(data=self.serialized_item)
-        if serializer.is_valid():
-            serializer.save()
-            self.assertEqual(WishlistItem.objects.count(), 1)
-        else:
-            self.fail(serializer.errors)
-
     def test_create_wishlist_item(self):
         self.serialized_item.pop('wishlist')
-        print(self.serialized_item)
         response = self.client.post('/api/item/', self.serialized_item, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(WishlistItem.objects.count(), 1)
         self.assertEqual(WishlistItem.objects.get().name, self.item_properties['name'])
-
-    def test_create_wishlist_item_index_unique(self):
-        WishlistItem.objects.create(**self.item_properties)
-        self.serialized_item.pop('wishlist')
-        response = self.client.post('/api/item/', self.serialized_item, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_retrieve(self):
         WishlistItem.objects.create(**self.item_properties)
@@ -186,5 +171,27 @@ class WishlistItemTests(APITestCase):
 
     def test_destroy(self):
         WishlistItem.objects.create(**self.item_properties)
-        response = self.client.delete(f'/api/item/{self.item_properties["index"]}')
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.item_properties['index'] += 1
+        WishlistItem.objects.create(**self.item_properties)
+        response1 = self.client.delete(f'/api/item/{self.item_properties["index"] - 1}')
+        response2 = self.client.get(f'/api/item/{self.item_properties["index"] - 1}')
+        self.assertEqual(response1.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response2.status_code, status.HTTP_200_OK)
+
+    def test_list_wishlist_items(self):
+        item1 = WishlistItem.objects.create(**self.item_properties)
+        self.item_properties['index'] += 1
+        item2 = WishlistItem.objects.create(**self.item_properties)
+        response = self.client.get('/api/listitems/')
+        correct_response = [WishlistItemSerializer(instance=item).data for item in (item1, item2)]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json_loads(response.content), correct_response)
+
+    def test_update_index(self):
+        WishlistItem.objects.create(**self.item_properties)
+        self.item_properties['index'] += 1
+        WishlistItem.objects.create(**self.item_properties)
+        updated_serialized_item = self.serialized_item.copy()
+        updated_serialized_item['index'] += 1
+        response = self.client.put(f'/api/item/{self.serialized_item["index"]}', updated_serialized_item, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

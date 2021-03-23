@@ -16,23 +16,43 @@ class CreateWishListUser(generics.CreateAPIView):
 
 
 class CreateWishlistItem(generics.CreateAPIView):
-    queryset = WishlistItem.objects.all()
     serializer_class = WishlistItemSerializer
     http_method_names = (u'post', u'options')
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
-        wishlist = Wishlist.objects.get(wishlistUser_id=request.user.id)
-        request.data.update({'wishlist': wishlist.id})
-        return self.create(request, *args, **kwargs)
+    def get_queryset(self):
+        return Wishlist.objects.get(wishlistUser=self.request.user).wishlistitem_set
+
+    def get_serializer(self, *args, **kwargs):
+        kwargs['fields'] = ['link_url', 'name', 'description', 'image_url', 'priority']
+        return super().get_serializer(*args, **kwargs)
 
 
 class RetrieveUpdateDestroyWishlistItem(generics.RetrieveUpdateDestroyAPIView):
-    queryset = WishlistItem.objects.all()
     serializer_class = WishlistItemSerializer
     http_method_names = (u'get', u'put', u'patch', u'delete', u'options')
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'index'
+
+    def get_queryset(self):
+        return Wishlist.objects.get(wishlistUser=self.request.user).wishlistitem_set
+
+    def perform_destroy(self, instance):
+        wishlist_length = instance.wishlist.wishlistitem_set.count()
+        instance_index = instance.index
+        wishlist = instance.wishlist
+        instance.delete()
+        # shift other items back
+        for item_index in range(instance_index, wishlist_length - 1):
+            item = WishlistItem.objects.get(wishlist=wishlist, index=item_index + 1)
+            item.index -= 1
+            item.save()
+
+
+class RetrieveWishlistItemList(generics.ListAPIView):
+    serializer_class = WishlistItemSerializer
+    http_method_names = (u'get', u'options')
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Wishlist.objects.get(wishlistUser=self.request.user).wishlistitem_set
