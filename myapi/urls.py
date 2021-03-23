@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CreateWishListUser, api_login_view, api_logout_view
+from .views import CreateWishListUser, api_login_view, api_logout_view, delete_user_view
 
 urlpatterns = [
     path('createAccount/', CreateWishListUser.as_view()),
