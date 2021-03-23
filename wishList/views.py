@@ -33,6 +33,10 @@ def additem(request):
     context = {}
     return render(request, '../templates/additem.html', context)
 
+def updateitem(request):
+    context = {}
+    return render(request, '../templates/updateitem.html', context)
+
 
 def editAccount(request):
     context = {}
