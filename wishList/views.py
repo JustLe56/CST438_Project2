@@ -36,7 +36,7 @@ def home(request):
         test_item = {
             "name": "wallet",
             "url": "google.com",
-            "img_url": "google.com",
+            "img_url": "i.insider.com/5cd9dda2021b4c40a54536c4?width=960&format=jpeg",
             "description": "cool wallet",
             "priority": 1
         }
@@ -74,3 +74,6 @@ def editAccount(request):
 
 def refresh_list(request):
     return render(request, '../templates/list.html')
+
+def refresh_hlist(request):
+    return render(request, '../templates/hlist.html')
