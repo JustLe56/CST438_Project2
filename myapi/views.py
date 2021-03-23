@@ -41,5 +41,11 @@ def api_logout_view(request):
         return JsonResponse({'detail': 'Success'})
     return JsonResponse({'detail': 'Not logged in'}, status=status.HTTP_400_BAD_REQUEST)
 
-
+@csrf_exempt
 def delete_user_view(request):
+    if request.user.is_authenticated:
+        delete_form = WishListUserDeleteForm(instance=request.user)
+        user = request.user
+        user.delete()
+        return JsonResponse({'detail': 'Account Successfully Deleted'})
+    return JsonResponse({'detail': 'Not logged in'}, status=status.HTTP_400_BAD_REQUEST)
