@@ -66,6 +66,9 @@ def additem(request):
     context = {}
     return render(request, '../templates/additem.html', context)
 
+def updateitem(request):
+    context = {}
+    return render(request, '../templates/updateItem.html', context)
 
 def editAccount(request):
     context = {}
