@@ -27,9 +27,9 @@
 
                 <div style="text-align: center; font-weight: bolder ">{{ item.name }}</div>
             &nbsp;&nbsp;<b>Priority</b>: {{ item.priority }} <br>
-            &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;" href="//{{ item.url }}" target="_blank"><b>Site</b></a> <br>
-            &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;" href="//{{ item.img_url }}" target="_blank"><b>Image</b></a> <br>
-            &nbsp;&nbsp;<img src="//{{ item.img_url }}" alt="tried getting:{{ item.img_url }}" style="width:400px;height:300px;">
+            &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.url }}" target="_blank"><b>Site</b></a> <br>
+            &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.img_url }}" target="_blank"><b>Image</b></a> <br>
+            &nbsp;&nbsp;<img  src="{{ item.img_url }}" alt="tried getting:{{ item.img_url }}" style="width:400px;height:300px;">
             &nbsp;&nbsp;<b>Description</b>: {{ item.description }} <br>
     </div>
         {% endfor %}
