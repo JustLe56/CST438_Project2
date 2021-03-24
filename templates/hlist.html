@@ -14,7 +14,7 @@
 
         {% for item in request.session.items %}
             <div class="item" id="item{{ forloop.counter0 }}">
-                <div class="delete">
+                <!-- <div class="delete">
                     <form id="rmItem{{ forloop.counter0 }}" action="/add_item/" style="text-align: right" class="remove">
                         {% csrf_token %}
 
@@ -22,7 +22,7 @@
 
                         <button  name="rmBtn" class="btn btn-link" style="color: dimgrey; text-decoration: none;outline: none; box-shadow: none;" onclick="editList('{{ forloop.counter0 }}')">&times;</button>
                     </form>
-                </div>
+                </div> -->
 
 
                 <div style="text-align: center; font-weight: bolder ">{{ item.name }}</div>
