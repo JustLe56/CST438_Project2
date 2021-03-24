@@ -1,0 +1,26 @@
+
+#refreshed{
+    border-style: solid;
+    border-width: thin;
+}
+
+.item{
+    background-color: inherit;
+    border-top-width: inherit;
+    border-top-style: inherit;
+    border-top-color: inherit;
+    margin-bottom: 1%;
+    color: #575757;
+}
+.labels{
+    width: 30%;
+    float: left;
+    text-align: right;
+}
+
+.inputs{
+    margin-left: 2%;
+    text-align: left;
+    width: 65%;
+    float:left;
+}
