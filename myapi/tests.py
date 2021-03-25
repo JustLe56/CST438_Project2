@@ -60,6 +60,13 @@ class WishListUserTests(APITestCase):
         WishListUserSerializer().create(self.test_credentials.copy())
         self.client.login(**self.test_credentials)
         response = self.client.post('/api/deleteUser/', format='json', follow=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json_loads(response.content), {'detail': 'Account Successfully Deleted'})
+
+    def test_delete_fail(self):
+        response = self.client.post('/api/deleteUser/', format='json', follow=True)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json_loads(response.content), {'detail': 'Not logged in'})
         
 
 class WishlistTests(APITestCase):
