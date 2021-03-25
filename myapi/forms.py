@@ -15,3 +15,8 @@ class WishListUserChangeForm(UserChangeForm):
     class Meta:
         model = WishListUser
         fields = ('username', 'email')
+
+class WishListUserDeleteForm(forms.ModelForm):
+	class Meta:
+		model = WishListUser
+		fields = []
