@@ -86,6 +86,7 @@ def api_logout_view(request):
 
   
 @csrf_exempt
+@require_POST
 def delete_user_view(request):
     if request.user.is_authenticated:
         delete_form = WishListUserDeleteForm(instance=request.user)
