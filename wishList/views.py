@@ -80,3 +80,6 @@ def editAccount(request):
 
 def refresh_list(request):
     return render(request, '../templates/list.html')
+  
+def refresh_hlist(request):
+    return render(request, '../templates/hlist.html')

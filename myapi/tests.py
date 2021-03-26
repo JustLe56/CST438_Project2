@@ -57,6 +57,18 @@ class WishListUserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json_loads(response.content), {'detail': 'Not logged in'})
 
+    def test_delete(self):
+        WishListUserSerializer().create(self.test_credentials.copy())
+        self.client.login(**self.test_credentials)
+        response = self.client.post('/api/deleteUser/', format='json', follow=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json_loads(response.content), {'detail': 'Account Successfully Deleted'})
+
+    def test_delete_fail(self):
+        response = self.client.post('/api/deleteUser/', format='json', follow=True)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json_loads(response.content), {'detail': 'Not logged in'})
+        
     def test_create_personal_wishlist(self):
         user = WishListUserSerializer().create(self.test_credentials.copy())
         try:
@@ -64,11 +76,11 @@ class WishListUserTests(APITestCase):
         except Model.DoesNotExist as e:
             self.fail(e.message)
 
-
 class WishlistTests(APITestCase):
 
     def setUp(self):
-        self.user = WishListUserSerializer().create({'username': 'Lars', 'password': 'n4p573r5uk5'})
+        self.user_credentials = {'username': 'Lars', 'password': 'n4p573r5uk5'}
+        self.user = WishListUserSerializer().create(self.user_credentials.copy())
         self.wishlist_properties = {'wishlistUser': self.user}
 
     def test_create_wishlist_instance(self):
@@ -77,6 +89,13 @@ class WishlistTests(APITestCase):
             wishlist.save()
         except ValidationError as e:
             self.fail(e.message)
+
+    def test_get_personal_wishlist_hyperlink(self):
+        self.client.login(**self.user_credentials)
+        wishlist_id = Wishlist.objects.get(wishlistUser=self.user).id
+        response = self.client.get('/api/wishlist-link/')
+        hyperlink = json_loads(response.content)['personal wishlist hyperlink']
+        self.assertEqual(hyperlink, f'http://testserver/wishlist/{wishlist_id}/')
 
 
 class LinkTests(APITestCase):

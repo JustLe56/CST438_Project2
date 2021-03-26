@@ -1,11 +1,12 @@
-from rest_framework import generics, mixins, permissions
+from rest_framework import generics, mixins, permissions, status
 from .models import WishListUser, WishlistItem, Wishlist
 from .serializers import WishListUserSerializer, WishlistItemSerializer
+from .forms import WishListUserDeleteForm
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 import json
 
 
@@ -58,6 +59,13 @@ class RetrieveWishlistItemList(generics.ListAPIView):
         return Wishlist.objects.get(wishlistUser=self.request.user).wishlistitem_set
 
 
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def personal_wishlist_hyperlink_view(request):
+    wishlist_id = Wishlist.objects.get(wishlistUser=request.user).id
+    hyperlink = request.build_absolute_uri(f'/wishlist/{wishlist_id}/')
+    return JsonResponse({'personal wishlist hyperlink': hyperlink})
+
 @csrf_exempt
 @require_POST
 def api_login_view(request):
@@ -81,4 +89,15 @@ def api_logout_view(request):
     if request.user.is_authenticated:
         logout(request)
         return JsonResponse({'detail': 'Success'})
+    return JsonResponse({'detail': 'Not logged in'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+@require_POST
+def delete_user_view(request):
+    if request.user.is_authenticated:
+        delete_form = WishListUserDeleteForm(instance=request.user)
+        user = request.user
+        user.delete()
+        return JsonResponse({'detail': 'Account Successfully Deleted'})
     return JsonResponse({'detail': 'Not logged in'}, status=status.HTTP_400_BAD_REQUEST)

@@ -17,7 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import home, logout_usr, createAcc, login, additem, editAccount, refresh_list, updateitem, load_items
+from .views import home, logout_usr, createAcc, login, additem, editAccount, add_item, refresh_list, updateitem, refresh_hlist, load_items
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +31,8 @@ urlpatterns = [
     path('updateitem/', updateitem, name="updateitem"),
     path('api/', include('myapi.urls')),
     path('load_items/', load_items, name="load_items"),
-    path('list/', refresh_list, name="refresh_list")
+    path('list/', refresh_list, name="refresh_list"),
+    path('add_item/', add_item, name="add_item"),
+    path('hlist/', refresh_hlist, name="refresh_hlist")
+
 ]
