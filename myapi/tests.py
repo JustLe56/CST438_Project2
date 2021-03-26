@@ -68,7 +68,8 @@ class WishListUserTests(APITestCase):
 class WishlistTests(APITestCase):
 
     def setUp(self):
-        self.user = WishListUserSerializer().create({'username': 'Lars', 'password': 'n4p573r5uk5'})
+        self.user_credentials = {'username': 'Lars', 'password': 'n4p573r5uk5'}
+        self.user = WishListUserSerializer().create(self.user_credentials.copy())
         self.wishlist_properties = {'wishlistUser': self.user}
 
     def test_create_wishlist_instance(self):
@@ -77,6 +78,13 @@ class WishlistTests(APITestCase):
             wishlist.save()
         except ValidationError as e:
             self.fail(e.message)
+
+    def test_get_personal_wishlist_hyperlink(self):
+        self.client.login(**self.user_credentials)
+        wishlist_id = Wishlist.objects.get(wishlistUser=self.user).id
+        response = self.client.get('/api/wishlist-link/')
+        hyperlink = json_loads(response.content)['personal wishlist hyperlink']
+        self.assertEqual(hyperlink, f'http://testserver/wishlist/{wishlist_id}/')
 
 
 class LinkTests(APITestCase):

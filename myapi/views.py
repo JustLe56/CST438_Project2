@@ -1,11 +1,11 @@
-from rest_framework import generics, mixins, permissions
+from rest_framework import generics, mixins, permissions, status
 from .models import WishListUser, WishlistItem, Wishlist
 from .serializers import WishListUserSerializer, WishlistItemSerializer
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 import json
 
 
@@ -56,6 +56,14 @@ class RetrieveWishlistItemList(generics.ListAPIView):
 
     def get_queryset(self):
         return Wishlist.objects.get(wishlistUser=self.request.user).wishlistitem_set
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def personal_wishlist_hyperlink_view(request):
+    wishlist_id = Wishlist.objects.get(wishlistUser=request.user).id
+    hyperlink = request.build_absolute_uri(f'/wishlist/{wishlist_id}/')
+    return JsonResponse({'personal wishlist hyperlink': hyperlink})
 
 
 @csrf_exempt
