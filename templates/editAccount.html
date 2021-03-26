@@ -9,30 +9,36 @@
     {% include 'partials/_bootstrap.html' %}
     <!-- CSS -->
     <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="{% static 'js/createAcc.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/deleteAcc.js' %}"></script>
 </head>
-<body>
+<body onload="deleteAccount()">
     {% include 'partials/_navBar.html' %}
     <div class="card">
-
+        <form action='/createAccount/' method="post" id="success">
+            {% csrf_token %}
+            <input type="hidden" name="accDeleted" value='1'>
+        </form>
         <div class="cardBan">Edit Account</div>
         <hr>
         <div class="cardInfo">
-            <label for="usernameInput" class="form-label">New Username</label><br>
-            <input id = "usernameInput" type = "text">
-            <div id="usernameHelp" class="form-text text-center">
-                Leave field empty to keep old username
-            </div>
-            <br> <br>
-            <label for="passwordInput" class="form-label">New Password</label> <br>
-            <input id = "passwordInput" type = "text">
-            <div id="passwordHelp" class="form-text text-center">
-                Leave field empty to keep old password
-            </div>
-            <br><br>
-            <button id = "updateButton" class = "btn btn-primary m-3"> Update account </button>
-            <br>
-            <button id = "deleteButton" class = "btn btn-danger m-4"> Delete account </button>
+            <form action="/api/deleteUser/" method="post" id = "delete">
+                <!-- <label for="usernameInput" class="form-label">New Username</label><br>
+                <input id = "usernameInput" type = "text">
+                <div id="usernameHelp" class="form-text text-center">
+                    Leave field empty to keep old username
+                </div>
+                <br> <br>
+                <label for="passwordInput" class="form-label">New Password</label> <br>
+                <input id = "passwordInput" type = "text">
+                <div id="passwordHelp" class="form-text text-center">
+                    Leave field empty to keep old password
+                </div>
+                <br><br>
+                <button id = "updateButton" class = "btn btn-primary m-3"> Update account </button>
+                <br> -->
+                {% csrf_token %}
+                <button type="submit" id = "deleteButton" class = "btn btn-danger m-4"> Delete account </button>
+            </form>
         </div>
     </div>
 </body>
