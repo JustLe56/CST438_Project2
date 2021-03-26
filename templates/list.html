@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+    {% include 'partials/_bootstrap.html' %}
+    <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/list.css' %}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+{% if request.session.items %}
+    <div id="refreshed" class="card">
+
+        {% for item in request.session.items %}
+            <div class="item" id="item{{ forloop.counter0 }}">
+                <div class="delete">
+                    <form id="rmItem{{ forloop.counter0 }}" action="/add_item/" style="text-align: right" class="remove">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="rm{{ forloop.counter0 }}" value='{{ forloop.counter0 }}'>
+
+                        <button  name="rmBtn" class="btn btn-link" style="color: dimgrey; text-decoration: none;outline: none; box-shadow: none;" onclick="editList('{{ forloop.counter0 }}')">&times;</button>
+                    </form>
+                </div>
+
+
+                <div style="text-align: center; font-weight: bolder ">{{ item.name }}</div>
+            &nbsp;&nbsp;<b>Priority</b>: {{ item.priority }} <br>
+                &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;" href="{{ item.url }}" target="_blank"><b>Site</b></a> <br>
+            &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;" href="{{ item.img_url }}" target="_blank"><b>Image</b></a> <br>
+            &nbsp;&nbsp;<b>Description</b>: {{ item.description }} <br>
+    </div>
+        {% endfor %}
+
+    </div>
+{% endif %}
+</body>
+</html>

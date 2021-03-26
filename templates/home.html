@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     {% include 'partials/_bootstrap.html' %}
+    <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
 </head>
-<body>
-{% include 'partials/_navBar.html' %}
+<body onload="refresh()">
+    {% include 'partials/_navBar.html' %}
 
-<H1><pre> hello {{user}} ! </pre></H1>
+    <H1><pre> hello {{user}} ! </pre></H1>
+    <div id="live"></div>
 </body>
 </html>
