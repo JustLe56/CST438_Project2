@@ -13,29 +13,30 @@
     <link href="{% static 'css/list.css' %}" rel="stylesheet" type="text/css"/>
 
 </head>
-<body onload="refresh()" >
+<body>
     {% include 'partials/_navBar.html' %}
     <div class="card">
 
         <div class="cardBan">Add item</div>
         <hr>
         <div class="cardInfo">
-            <form id="addItem" action="/add_item/">
+
+            <form method="post" id="addItem" action="/api/item/">
+                {% csrf_token %}
                 <div class="labels">
-                <input type="hidden" name="rm" value='-1'>
-                <label for="name" class="form-label">Item Name:</label> <br><br>
-                <label for="url" class="form-label">Item Store URL:</label> <br><br>
-                    <label for="img_url" class="form-label">Item Image URL:</label><br><br>
-                <label for="description" class="form-label">Item Description:</label><br><br>
-                <label for="priority" class="form-label">Item Priority:</label>
+                    <label for="name" class="form-label">Item Name:</label> <br><br>
+                    <label for="description" class="form-label">Item Description:</label><br><br>
+                    <label for="link_url" class="form-label">Item Store URL:</label> <br><br>
+                    <label for="image_url" class="form-label">Item Image URL:</label><br><br>
+                    <label for="priority" class="form-label">Item Priority:</label>
                 </div>
 
                 <div class="inputs">
                     <input name="name" id="name" type = "text" required form="addItem"><br><br>
-                    <input name = "url" id="url" type = "url" required form="addItem"><br><br>
-                    <input name = "img_url" id="img_url" type = "url" required form="addItem"><br><br>
                     <input name = "description" id="description" type = "text" required form="addItem"><br><br>
-                    <select name="priority" id="priority">
+                    <input name = "link_url" id="link_url" type = "url" required form="addItem"><br><br>
+                    <input name = "image_url" id="image_url" type = "url" required form="addItem"><br><br>
+                    <select name="priority" id="priority" form="addItem">
                       <option value=1>1</option>
                       <option value=2>2</option>
                       <option value=3>3</option>
@@ -47,11 +48,10 @@
             </form>
 
         </div>
-        <button style="width: 30%; margin: 10% auto auto" id = "addBtn" class = "btn btn-success" form="addItem" onclick="editList('add')"> Add item </button>
+        <button type="submit" style="width: 30%; margin: 10% auto auto" id = "addBtn" class = "btn btn-success" form="addItem" onclick="editList('add')"> Add item </button>
+
     </div>
-
     <div id="live"></div>
-
 <br><br>
 </body>
 </html>

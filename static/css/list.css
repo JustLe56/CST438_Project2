@@ -24,3 +24,9 @@
     width: 65%;
     float:left;
 }
+
+#live{
+    text-align: center;
+    margin: 10% auto auto;
+    width: 40%;
+}
