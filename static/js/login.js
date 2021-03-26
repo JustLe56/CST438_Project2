@@ -19,14 +19,37 @@ function login(){
             console.log(error)
         })
 
-        posting.done(function (data){
+        posting.done( async function (data){
            let content = $(data).find("#content");
            $("#valMsg").empty().append(content);
            console.log(content);
            console.log(content.status)
            if(content.prevObject[0].detail === "Success"){
+               await getList();
                window.location.href = "/";
            }
         });
     });
+}
+
+async function getList(){
+    let options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    let response =  await fetch("/api/listitems/", options);
+    const json =  await response.json();
+    console.log(json)
+    let newReq = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(json)
+    };
+    let resp = await fetch("/load_items/", newReq)
+    let jsn = await resp
+    console.log(jsn)
 }
