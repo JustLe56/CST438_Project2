@@ -14,7 +14,9 @@
 <body onload="deleteAccount()">
     {% include 'partials/_navBar.html' %}
     <div class="card">
-        <form action='/createAcc/' method="post" id="success">
+        <form action='/createAccount/' method="post" id="success">
+            {% csrf_token %}
+            <input type="hidden" name="accDeleted" value='1'>
         </form>
         <div class="cardBan">Edit Account</div>
         <hr>
@@ -34,6 +36,7 @@
                 <br><br>
                 <button id = "updateButton" class = "btn btn-primary m-3"> Update account </button>
                 <br> -->
+                {% csrf_token %}
                 <button type="submit" id = "deleteButton" class = "btn btn-danger m-4"> Delete account </button>
             </form>
         </div>
