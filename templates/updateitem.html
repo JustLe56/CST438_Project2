@@ -9,42 +9,49 @@
     {% include 'partials/_bootstrap.html' %}
     <!-- CSS -->
     <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="{% static 'js/createAcc.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/updateitem.js' %}"></script>
 </head>
-<body>
+<body onload="prefill({{ index }})">
     {% include 'partials/_navBar.html' %}
     <div class="card">
 
         <div class="cardBan">Update item</div>
         <hr>
         <div class="cardInfo">
-            <label for="itemNameInput" class="form-label">Update Item Name</label><br>
-            <input id = "itemNameInput" type = "text">
-						<div id="itemNameInput" class="form-text text-center">
-							Leave field empty to keep old item name
-						</div>
-            <br> <br>
-            <label for="urlInput" class="form-label">New Url</label> <br>
-            <input id = "urlInput" type = "text">
-						<div id="urlInput" class="form-text text-center">
-							Leave field empty to keep old url
-						</div>
-						<br> <br>
-            <label for="urlImageInput" class="form-label">New Image Url</label> <br>
-            <input id = "urlImageInput" type = "text">
-						<div id="urlImageInput" class="form-text text-center">
-							Leave field empty to keep old image url
-						</div>
-            <br><br>
-						<label for="itemDesc" class="form-label">New item description</label> <br>
-            <input id = "itemDesc" type = "text">
-						<div id="itemDesc" class="form-text text-center">
-							Leave field empty to keep old image description
-						</div>
-            <br><br>
-						
-            <button id = "updateButton" class = "btn btn-primary m-3"> Update item </button>
-						<br>
+
+            <form id="edited" action='/api/item/{{ index }}'>
+                {% csrf_token %}
+                <label for="itemNameInput" class="form-label">Update Item Name</label><br>
+                <input name="name" id = "itemNameInput" type = "text" form="edited">
+
+                <br> <br>
+
+                <label for="itemDesc" class="form-label">New item description</label> <br>
+                <input name = "description" id = "itemDesc" type = "text" form="edited">
+
+                <br><br>
+
+                <label for="urlInput" class="form-label">Url</label> <br>
+                <input name = "link_url" id = "urlInput" type = "text" form="edited">
+
+                            <br> <br>
+                <label for="urlImageInput" class="form-label">New Image Url</label> <br>
+                <input name = "image_url" id = "urlImageInput" type = "text" form="edited"><br><br>
+
+                <label for="priority" class="form-label">Item Priority:</label>
+                <select name="priority" id="priority" form="edited">
+                      <option value=1>1</option>
+                      <option value=2>2</option>
+                      <option value=3>3</option>
+                      <option value=4>4</option>
+                      <option value=5>5</option>
+                    </select>
+                <br><br>
+                <button type="submit" onclick="editList({{ index }})" id = "updateButton" class = "btn btn-primary m-3"  form="edited"> Update item </button>
+                <button type="submit" onclick="remove()" form="edited" id="removeBtn" class="btn btn-danger">Delete</button><br>
+            </form>
+        <div id="msg">
+
         </div>
     </div>
 </body>

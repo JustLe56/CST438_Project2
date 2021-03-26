@@ -1,4 +1,5 @@
 function editList (type){
+     $("#live").html("")
     if(type === "add") {
         $("#live").html("")
         $('#addItem').one('submit',async function (event) {
@@ -31,10 +32,15 @@ function editList (type){
             let response = await fetch(action, options);
             const json = await response.json();
             if(json.name === i_name){
-                $("#live").html("<div class=\"alert alert-success\" role=\"alert\" style=\"font-size: small\">\n<br>"
-                +i_name+ " added successfully!\n" +
-                    "                </div>")
+                 $('#live').html("<br><div style='font-size: small' class='alert alert-secondary' role='alert'>" +
+                   "loading.." +
+                   "</div>");
+                await getList();
+                $("#live").html("<br><div style='font-size: small' class='alert alert-success' role='alert'>" +
+                   i_name+" Added successfully" +
+                   "</div>");
             }
+
         });
 
 
@@ -64,4 +70,25 @@ function editList (type){
     //     });
     // }
 
+}
+async function getList(){
+    let options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    let response =  await fetch("/api/listitems/", options);
+    const json =  await response.json();
+    console.log(json)
+    let newReq = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(json)
+    };
+    let resp = await fetch("/load_items/", newReq)
+    let jsn = await resp
+    console.log(jsn)
 }

@@ -8,11 +8,33 @@
     <title>Home</title>
     {% include 'partials/_bootstrap.html' %}
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/list.css' %}" rel="stylesheet" type="text/css"/>
 </head>
-<body onload="refresh()">
+<body>
     {% include 'partials/_navBar.html' %}
+    <div class= 'card' id="live">
+        {% if request.session.items %}
+    <h1 style="text-align: center">Items</h1>
+    <div id="refreshed" class="card">
 
-    <H1><pre> hello {{user}} ! </pre></H1>
-    <div id="live"></div>
+        {% for item in request.session.items %}
+            <div class="item" id="item{{ item.index }}">
+
+                <div style="text-align: center; font-weight: bolder "><a href="/updateitem?index={{ item.index }}">{{ item.name }}</a></div>
+            &nbsp;&nbsp;<b>Priority</b>: {{ item.priority }} <br>
+            &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.link_url }}" target="_blank"><b>Site</b></a> <br>
+            &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.image_url }}" target="_blank"><b>Image</b></a> <br>
+            &nbsp;&nbsp;<img  src="{{ item.image_url }}" alt="tried getting:{{ item.image_url }}" style="max-width:400px;max-height:300px;"><br>
+            &nbsp;&nbsp;<b>Description</b>: {{ item.description }} <br>
+    </div>
+        {% endfor %}
+
+    </div>
+
+{% else %}
+    <h1 style="text-align: center">Empty list</h1>
+{% endif %}
+    </div>
 </body>
 </html>

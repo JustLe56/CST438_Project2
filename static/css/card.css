@@ -1,6 +1,6 @@
 .card{
     margin: 10% auto auto;
-    width: 40%;
+    width: 50%;
     border-style: hidden;
 }
 .cardBan{
@@ -15,5 +15,5 @@
     width: 50%;
     padding: 10px;
     margin: 1% auto auto;
-    font-size: large;
+    font-size: medium;
 }

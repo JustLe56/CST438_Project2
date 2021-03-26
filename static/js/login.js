@@ -40,8 +40,12 @@ async function getList(){
         }
     };
     let response =  await fetch("/api/listitems/", options);
-    const json =  await response.json();
+    let json = await response;
     console.log(json)
+    if( json.status ===200){
+        json = await response.json()
+    }
+
     let newReq = {
         method: 'POST',
         headers: {

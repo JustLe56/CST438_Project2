@@ -13,14 +13,14 @@
     <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
 
 </head>
-<body onload="login()">
+<body >
 {% include 'partials/_navBar.html' %}
 <div class="card">
 
     <div class="cardBan">Login</div>
     <hr>
     <div class="cardInfo">
-        <form action="/api/login/" id="credentials">
+        <form id="credentials" method="post" action="/api/login/" >
             {% csrf_token %}
 
             <label for="username">Username</label><br>
@@ -32,7 +32,7 @@
                 <input type="password" name="password" id="password" form="credentials" required onchange="resetVal()">
             <br>
             <br>
-            <button type="submit" class="btn btn-outline-primary" form="credentials" >login</button>
+            <button type="submit" class="btn btn-outline-primary" form="credentials" onclick="login()">login</button>
 
         </form>
         <div id="valMsg">
