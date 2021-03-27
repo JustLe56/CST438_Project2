@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Wishlist</title>
     {% include 'partials/_bootstrap.html' %}
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
     <link href="{% static 'css/card.css' %}" rel="stylesheet" type="text/css"/>
@@ -14,15 +14,15 @@
 <body>
     {% include 'partials/_navBar.html' %}
     <div class= 'card' id="live">
-        {% if request.session.items %}
+        {% if items %}
     <h1 style="text-align: center">Items</h1>
 
     <div id="refreshed" class="card">
 
-        {% for item in request.session.items %}
+        {% for item in  items %}
             <div class="item" id="item{{ item.index }}">
 
-                <div style="text-align: center; font-weight: bolder "><a style="color: #2C2C2C" href="/updateitem?index={{ item.index }}">{{ item.name }}</a></div>
+                <div style="text-align: center; font-weight: bolder "> {{ item.name }}</div>
             &nbsp;&nbsp;<b>Priority</b>: {{ item.priority }} <br>
             &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.link_url }}" target="_blank"><b>Site</b></a> <br>
             &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.image_url }}" target="_blank"><b>Image</b></a> <br>
@@ -32,12 +32,7 @@
         {% endfor %}
 
     </div>
-            <button style="width: 10%" type="button" onclick="getLink()" class="btn btn-secondary">Share</button>
-            <div id="link"></div>
 </div>
-{% else %}
-    <h1 style="text-align: center">Empty list</h1>
-
 
 {% endif %}
 

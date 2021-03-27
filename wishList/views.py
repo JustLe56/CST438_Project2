@@ -1,9 +1,13 @@
+import kwargs as kwargs
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
 import json
+
+from myapi.models import Wishlist
+
 
 @csrf_exempt
 @require_POST
@@ -55,3 +59,10 @@ def updateitem(request):
 def editAccount(request):
     context = {}
     return render(request, '../templates/editAccount.html', context)
+
+
+def wishlist(request, **kwargs):
+    id = kwargs['id']
+    items = Wishlist.objects.get(id=id).wishlistitem_set.order_by('index')
+    context = {'items': items}
+    return render(request, '../templates/wishlist.html', context)
