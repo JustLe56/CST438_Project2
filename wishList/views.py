@@ -1,4 +1,3 @@
-import kwargs as kwargs
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
