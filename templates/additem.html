@@ -28,7 +28,7 @@
                     <label for="description" class="form-label">Item Description:</label><br><br>
                     <label for="link_url" class="form-label">Item Store URL:</label> <br><br>
                     <label for="image_url" class="form-label">Item Image URL:</label><br><br>
-                    <label for="priority" class="form-label">Item Priority:</label>
+
                 </div>
 
                 <div class="inputs">
@@ -36,15 +36,16 @@
                     <input name = "description" id="description" type = "text" required form="addItem"><br><br>
                     <input name = "link_url" id="link_url" type = "url" required form="addItem"><br><br>
                     <input name = "image_url" id="image_url" type = "url" required form="addItem"><br><br>
-                    <select name="priority" id="priority" form="addItem">
-                      <option value=1>1</option>
-                      <option value=2>2</option>
-                      <option value=3>3</option>
-                      <option value=4>4</option>
-                      <option value=5>5</option>
-                    </select>
-                </div>
 
+                </div>
+                <label for="priority" class="form-label">Item Priority</label>
+            <select style="text-align: center" name="priority" id="priority" form="addItem">
+                                  <option value=1>1</option>
+                                  <option value=2>2</option>
+                                  <option value=3>3</option>
+                                  <option value=4>4</option>
+                                  <option value=5>5</option>
+                                </select>
             </form>
 
         </div>

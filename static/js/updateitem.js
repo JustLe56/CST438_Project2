@@ -35,7 +35,7 @@ function editList(i){
             console.log(json)
             if(json.name === i_name){
                 $('#msg').html("<br><div style='font-size: small' class='alert alert-secondary' role='alert'>" +
-                   "loading.." +
+                   "loading..." +
                    "</div>");
                 await getList();
                 $('#msg').html("");
@@ -83,7 +83,7 @@ function remove(){
         const json = await response;
         if(json.status===204){
             $('#msg').html("<br><div style='font-size: small' class='alert alert-secondary' role='alert'>" +
-                   "loading.." +
+                   "loading..." +
                    "</div>");
             await getList()
             window.location.href = "/";

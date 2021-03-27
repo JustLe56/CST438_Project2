@@ -40,9 +40,9 @@ async function getList(){
         }
     };
     let response =  await fetch("/api/listitems/", options);
-    let json = await response;
-    console.log(json)
-    if( json.status ===200){
+    let json
+    console.log(response)
+    if( response.status ===200){
         json = await response.json()
     }
 

@@ -24,13 +24,14 @@ function createAccount(){
                 };
 
                 let response = await fetch(url, options);
-                const json = await response.json()
-                console.log(json.username+"added successfully!");
-                if(json.username=== usr){
+
+                if(response.status === 201){
                     $("#success").submit();
                 }else{
+                    let json = await response.json();
                     $("#valMsg").html(
-                        "<br><div style='font-size: small' class='alert alert-secondary' role='alert'>"+ json.username +"</div>"
+                        "<br><div style='font-size: small' class='alert alert-secondary' role='alert'>"+ json.username
+                        +"</div>"
                     );
                 }
             }

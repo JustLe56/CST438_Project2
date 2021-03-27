@@ -21,7 +21,7 @@
         {% for item in request.session.items %}
             <div class="item" id="item{{ item.index }}">
 
-                <div style="text-align: center; font-weight: bolder "><a href="/updateitem?index={{ item.index }}">{{ item.name }}</a></div>
+                <div style="text-align: center; font-weight: bolder "><a style="color: #2C2C2C" href="/updateitem?index={{ item.index }}">{{ item.name }}</a></div>
             &nbsp;&nbsp;<b>Priority</b>: {{ item.priority }} <br>
             &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.link_url }}" target="_blank"><b>Site</b></a> <br>
             &nbsp;&nbsp;<a style=" text-decoration: none;outline: none;"  href="{{ item.image_url }}" target="_blank"><b>Image</b></a> <br>

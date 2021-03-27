@@ -55,10 +55,3 @@ def updateitem(request):
 def editAccount(request):
     context = {}
     return render(request, '../templates/editAccount.html', context)
-
-
-def refresh_list(request):
-    return render(request, '../templates/list.html')
-  
-def refresh_hlist(request):
-    return render(request, '../templates/hlist.html')

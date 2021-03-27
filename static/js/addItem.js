@@ -33,7 +33,7 @@ function editList (type){
             const json = await response.json();
             if(json.name === i_name){
                  $('#live').html("<br><div style='font-size: small' class='alert alert-secondary' role='alert'>" +
-                   "loading.." +
+                   "loading..." +
                    "</div>");
                 await getList();
                 $("#live").html("<br><div style='font-size: small' class='alert alert-success' role='alert'>" +
